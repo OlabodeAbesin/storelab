@@ -21,7 +21,7 @@ class ProductsControllerTest extends TestCase
             'quantity' => $this->faker->numberBetween(1, 100),
         ];
     }
-
+ 
     /** @test */
     public function it_can_create_a_product()
     {
