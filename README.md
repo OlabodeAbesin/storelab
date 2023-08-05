@@ -1,66 +1,221 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# E-commerce API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a simple e-commerce RESTful API built using Laravel and Docker. The API allows users to perform CRUD operations on products.
 
-## About Laravel
+## Setup
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Clone the repository: `git clone https://github.com/OlabodeAbesin/storelab.git`
+2. Navigate to the project directory: `cd storelab`
+3. Create a `.env` file based on `.env.example` and set the necessary environment variables (database, etc.).
+4. Install the required dependencies: `composer install`
+5. Generate the application key: `php artisan key:generate`
+6. Run database migrations: `php artisan migrate`
+7. Start the development server: `php artisan serve`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## API Endpoints
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Refer to the API documentation below for details on available endpoints and their request/response formats.
 
-## Learning Laravel
+## Authentication
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+This API uses Sanctum for user authentication. To access the protected endpoints, clients must include the `Authorization` header with a valid Bearer token obtained after logging in.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Testing
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Run PHPUnit tests to verify the functionality of the API endpoints:
 
-## Laravel Sponsors
+```
+php artisan test
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Dockerization
 
-### Premium Partners
+This application is Dockerized using Laravel Sail, which provides a lightweight development environment with Docker containers. To start the application locally, use the following command:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```
+./vendor/bin/sail up -d
+```
+The application will be accessible at `http://localhost`.
 
-## Contributing
+1. In your terninal, build the Docker image using Sail: ```./vendor/bin/sail build```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. Run the Docker container: ```./vendor/bin/sail up -d```
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## API Documentation
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Link to postman collection (easier to import and run the endpoints)
 
-## License
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3023926-804457f3-b7f9-4b6b-988b-882a0793219a?action=collection%2Ffork&collection-url=entityId%3D3023926-804457f3-b7f9-4b6b-988b-882a0793219a%26entityType%3Dcollection%26workspaceId%3D400fe098-01ea-414f-b4a7-24273bc1ddf1)
+### Base URL
+```
+http://your-api-base-url/api
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Authentication
+This API uses Sanctum for user authentication. To access the protected endpoints, clients must include the `Authorization` header with a valid Bearer token obtained after logging in.
+
+### Endpoints
+
+#### 1. Create an Api user
+
+```
+POST /auth/register
+```
+
+**Purpose:** Create a new user in the database.
+
+**Request Format**
+```json
+{
+    "name": "Todd James",
+    "email": "test@storelab.com",
+    "password": "123456"
+}
+```
+
+**Response Format**
+```json
+{
+    "status": "Success",
+    "message": "Api User Created",
+    "data": {
+        "name": "Todd James",
+        "email": "test@storelab.com",
+        "api_token": "1|y6TUVWXYZ....."
+    }
+}
+```
+
+#### 2. Create a Product
+
+```
+POST /products
+```
+
+**Purpose:** Create a new product in the database.
+
+**Request Format**
+```json
+{
+  "name": "Product Name",
+  "description": "Product Description",
+  "price": 25.99,
+  "quantity": 100
+}
+```
+
+**Response Format**
+```json
+{
+  "message": "Product created successfully",
+  "data": {
+    "id": 1,
+    "name": "Product Name",
+    "description": "Product Description",
+    "price": 25.99,
+    "quantity": 100,
+    "created_at": "2023-08-03 12:34:56",
+    "updated_at": "2023-08-03 12:34:56"
+  }
+}
+```
+
+#### 3. Update a Product
+
+```
+PUT /products/{product_id}
+```
+
+**Purpose:** Update an existing product.
+
+**Request Format**
+```json
+{
+  "name": "Updated Product Name",
+  "description": "Updated Product Description",
+  "price": 29.99,
+  "quantity": 75
+}
+```
+
+**Response Format**
+```json
+{
+  "message": "Product updated successfully",
+  "data": {
+    "id": 1,
+    "name": "Updated Product Name",
+    "description": "Updated Product Description",
+    "price": 29.99,
+    "quantity": 75,
+    "created_at": "2023-08-03 12:34:56",
+    "updated_at": "2023-08-03 13:45:12"
+  }
+}
+```
+
+#### 4. Delete a Product
+
+```
+DELETE /products/{product_id}
+```
+
+**Purpose:** Delete a product from the database.
+
+**Response Format**
+```json
+{
+  "message": "Product deleted successfully"
+}
+```
+
+#### 5. Get All Products
+
+```
+GET /products
+```
+
+**Purpose:** Fetch a list of all products.
+
+**Response Format**
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Product Name",
+      "description": "Product Description",
+      "price": 25.99,
+      "quantity": 100,
+      "created_at": "2023-08-03 12:34:56",
+      "updated_at": "2023-08-03 12:34:56"
+    },
+    // More products...
+  ]
+}
+```
+
+#### 6. Get a Single Product
+
+```
+GET /products/{product_id}
+```
+
+**Purpose:** Fetch details of a single product.
+
+**Response Format**
+```json
+{
+  "data": {
+    "id": 1,
+    "name": "Product Name",
+    "description": "Product Description",
+    "price": 25.99,
+    "quantity": 100,
+    "created_at": "2023-08-03 12:34:56",
+    "updated_at": "2023-08-03 12:34:56"
+  }
+}
+```
