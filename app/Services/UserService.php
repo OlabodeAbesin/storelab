@@ -13,8 +13,14 @@ class UserService
     {
         $user = User::create($userData);
 
-        $user->roles()->sync($userData['roles']);
+        return $user;
+    }
 
+    /**
+     * Get authenticated user
+     */
+    public function show(User $user): User
+    {
         return $user;
     }
 

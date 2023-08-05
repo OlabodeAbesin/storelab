@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RefreshTokenRequest;
 use App\Http\Requests\StoreUserRequest;
-use App\Http\Resources\AuthResource;
+use App\Http\Resources\Api\AuthResource as ApiAuthResource;
 use App\Services\UserService;
 use App\Traits\ApiResponser;
 
@@ -24,13 +24,13 @@ class UserController extends Controller
     {
         $response = $this->userService->store($request->validated());
 
-        return $this->successResponse(new AuthResource($response), 'Api User Created');
+        return $this->successResponse(new ApiAuthResource($response), 'Api User Created');
     }
 
-    public function update(RefreshTokenRequest $request, User $user)
+    public function refreshToken(RefreshTokenRequest $request, User $user)
     {
-        $response = $this->userService->update($request->validated(), $user);
+        $response = $this->userService->refreshToken($user);
 
-        return $this->successResponse(new AuthResource($response), 'Api Keys Refreshed');
+        return $this->successResponse(new ApiAuthResource($response), 'Api Keys Refreshed');
     }
 }

@@ -4,24 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\Api\ProductResource;
 use App\Models\Product;
+use App\Services\ProductService;
+use App\Traits\ApiResponser;
 
 class ProductController extends Controller
 {
+    use ApiResponser;
+
+    private ProductService $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $response = $this->productService->index();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return $this->successResponse(ProductResource::collection($response), 'Products retrieved');
     }
 
     /**
@@ -29,7 +35,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $response = $this->productService->store($request->validated());
+
+        return $this->successResponse(new ProductResource($response), 'Product created successfully', 201);
     }
 
     /**
@@ -37,15 +45,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
-    }
+        $response = $this->productService->show($product);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
-    {
-        //
+        return $this->successResponse(new ProductResource($response), 'Product retrieved');
     }
 
     /**
@@ -53,7 +55,9 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $response = $this->productService->update($product, $request->validated());
+
+        return $this->successResponse(new ProductResource($response), 'Product updated successfully');
     }
 
     /**
@@ -61,6 +65,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $response = $this->productService->delete($product);
+        $message = $response ? 'Product deleted successfully' : 'Product not deleted';
+
+        return $this->successResponse([], $message);
     }
 }

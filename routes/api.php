@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -21,11 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/users', UserController::class);
+Route::post('/auth/register', [UserController::class, 'store']);
+
 /* Ecommerce Routes */
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/products', ProductController::class);
-    Route::apiResource('/categories', CategoryController::class);
-
-    //Route::get('refresh_token', [AuthController::class, 'refreshToken']);
+    Route::get('/auth/refresh-token', [UserController::class, 'refreshToken']);
 });
